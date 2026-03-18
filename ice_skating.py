@@ -3,7 +3,6 @@ def coord_grouping(snow_drifts, coordinates):
     #Use the coordinate tuple of each item as the key, and the x coordinate as the default value.
     #This will be used identify all unique groups of coordinates
     dict_coords = {key: key[0] for key in coordinates}
-
     #Breakdown of function:
     #1. Loop through each key of dict_coords.
     #2. A second loop (nested) of each key of dict_coords.
@@ -16,22 +15,24 @@ def coord_grouping(snow_drifts, coordinates):
                 if i[0] == j[0] or i[1] == j[1]:
                     #updates entire dictionary with the shared coordinate if one is found
                     dict_coords = update_shared_values(dict_coords,i,j)
-
     #Returns the number of unique value sets minus 1 since there is no drift needed at the start
     return len(set(dict_coords.values())) - 1
 
 def update_shared_values(dict_coords, former, new):
-    #If former value (i) is different from new value (j), updates all (i) values in the dictionary
-    #This ensures that the value remains as an identifier as a set of movements
-    new_shared = (set(former) & set(new)).pop()
-    for i in dict_coords:
-        if dict_coords.get(i) != dict_coords.get(new):
-            dict_coords[i] = new_shared
+    #Saving the former's value and the new value
+    target_id = dict_coords.get(former)
+    new_id = dict_coords.get(new)
+    #Find all keys that have the former value
+    update_keys = [key for key, value in dict_coords.items() if value == target_id]
+    #Update all matching keys to the newest
+    for i in update_keys:
+        dict_coords[i] = new_id
+
     return dict_coords
 
 def main():
     #Test coordinates
-    coordinates = [(1,1),(1,2)]
+    coordinates = [(1, 1), (1, 10), (100, 100), (100, 200), (500, 500)]
     snow_drifts = len(coordinates)
     length = coord_grouping(snow_drifts,coordinates)
     print(f"The length is {length} for {coordinates}")
