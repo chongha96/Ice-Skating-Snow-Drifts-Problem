@@ -29,6 +29,14 @@ The overall process is:
 5. Return the number of unique values in the dictionary, minus 1
 ```
 
+Flaws:
+```
+1. Ineffiency. Running at O(N^3) due to 3 loops nested
+2. Did not utilize # of coordinates. Given that it was one of the inputs, it's likely that it
+   had some relation to a better solution
+3. Did not utilize transitivity/chain logic (ie. a = b = c)
+```
+
 Example Case:
 ```
 Given a list of tuples: (1,1), (1,10), (5,10)
@@ -64,6 +72,6 @@ End:
 Dictionary: {(1, 1): 10, (1, 10): 10, (5, 10): 10}
 
 Unique Values: 1
-
+```
 Return: 1 - 0 = 0
 ```
